@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fleet Fraud Detector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f8fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            margin: 0;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        form, .download-section {
+            background-color: white;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 350px;
+        }
+
+        input[type="file"],
+        input[type="text"] {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        button, a.download-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.4rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, a.download-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        a.flagged-btn {
+            background-color: #e74c3c;
+        }
+
+        a.flagged-btn:hover {
+            background-color: #c0392b;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ecf0f1;
+            margin: 2rem 0;
+            width: 60%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fleet Fraud Detector</h1>
+    <p class="subtitle">Upload, predict, explain — and take action with confidence.</p>
+
+    <!-- CSV Upload Section -->
+    <form action="/predict" method="POST" enctype="multipart/form-data">
+        <div class="section-title">1. Upload Transaction CSV</div>
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Upload & Predict</button>
+    </form>
+
+    <hr />
+
+    <!-- Explain a Transaction Section -->
+    <form action="/explain" method="POST">
+        <div class="section-title">2. Explain a Specific Transaction</div>
+        <input type="text" name="uid" placeholder="Enter Transaction UID" required>
+        <button type="submit">Explain</button>
+    </form>
+
+    <hr />
+
+    <!-- Download Section -->
+    <div class="download-section">
+        <div class="section-title">3. Download Previous Results</div>
+        <a class="download-btn" href="/download-all">Download All Transactions</a>
+        <a class="download-btn flagged-btn" href="/download-flagged">Download Only Flagged Transactions</a>
+    </div>
+</body>
+</html>

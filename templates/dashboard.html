@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fleet Fraud Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            padding: 2rem;
+            text-align: center;
+        }
+        .charts {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        canvas {
+            max-width: 400px;
+            margin: 1rem auto;
+        }
+        .btns a {
+            margin: 0.5rem;
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btns a:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Fleet Fraud Prediction Summary</h2>
+
+    <div class="charts">
+        <div>
+            <h4>Flagged vs Non-Flagged</h4>
+            <canvas id="flaggedChart"></canvas>
+        </div>
+
+        <div>
+            <h4>Confidence Breakdown</h4>
+            <canvas id="confidenceChart"></canvas>
+        </div>
+    </div>
+
+    <div class="btns">
+        <a href="/download-all">Download All</a>
+        <a href="/download-flagged">Download Flagged Only</a>
+        <a href="/">Back to Home</a>
+    </div>
+
+    <form action="/explain" method="POST" style="margin-top: 2rem;">
+        <input type="text" name="uid" placeholder="Enter Transaction UID" required>
+        <button type="submit">Explain This Transaction</button>
+    </form>
+
+    <script>
+        const flagged = {{ flagged }};
+        const total = {{ total }};
+        const notFlagged = total - flagged;
+
+        new Chart(document.getElementById("flaggedChart"), {
+            type: 'pie',
+            data: {
+                labels: ["Flagged", "Not Flagged"],
+                datasets: [{
+                    data: [flagged, notFlagged],
+                    backgroundColor: ["#e74c3c", "#2ecc71"]
+                }]
+            }
+        });
+
+        new Chart(document.getElementById("confidenceChart"), {
+            type: 'bar',
+            data: {
+                labels: ["Low", "Medium", "High"],
+                datasets: [{
+                    label: 'Confidence',
+                    data: [
+                        {{ confidence.get("Low", 0) }},
+                        {{ confidence.get("Medium", 0) }},
+                        {{ confidence.get("High", 0) }}
+                    ],
+                    backgroundColor: ["#f39c12", "#f1c40f", "#27ae60"]
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

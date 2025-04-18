@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction Explanation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            padding: 2rem;
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .shap-img {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            text-decoration: none;
+            background: #3498db;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+        }
+
+        .back-link:hover {
+            background: #2980b9;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Explanation for Transaction <code>{{ uid }}</code></h2>
+        <p><strong>Prediction:</strong> {{ "Suspicious" if prediction else "Not Suspicious" }}</p>
+        <p><strong>Confidence:</strong> {{ prob }}% ({{ confidence_label|lower }})</p>
+        <p><strong>Why?</strong> {{ explanation }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Transaction Details</h3>
+        <table>
+            {% for key, value in details.items() %}
+                <tr><th>{{ key }}</th><td>{{ value }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card shap-img">
+        <h3>SHAP Force Plot</h3>
+        <img src="data:image/png;base64,{{ shap_image }}" alt="SHAP Plot" />
+    </div>
+
+    <a class="back-link" href="/">← Back to Home</a>
+
+</body>
+</html>

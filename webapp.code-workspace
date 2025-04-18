@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "test",
+			"path": "."
+		}
+	],
+	"settings": {
+		"IDX.aI.enableInlineCompletion": true,
+		"IDX.aI.enableCodebaseIndexing": true
+	}
+}
